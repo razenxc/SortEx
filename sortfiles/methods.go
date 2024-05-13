@@ -3,6 +3,7 @@ package sortfiles
 import (
 	"fmt"
 	"os"
+	"path"
 
 	"github.com/rwcarlsen/goexif/exif"
 )
@@ -38,4 +39,16 @@ func CreateFolder(exif *EXIFdata, path string) (string, error) {
 func MoveToFolder(oldPath string, newPath string) error {
 	err := os.Rename(oldPath, newPath)
 	return err
+}
+
+func CheckTypes(filePath string, fileTypes []string) (status bool) {
+	for i := 0; i < len(fileTypes); i++ {
+		if fileTypes[i] != path.Ext(filePath) {
+			status = false
+		} else {
+			status = true
+			break
+		}
+	}
+	return status
 }
