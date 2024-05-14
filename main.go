@@ -27,6 +27,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	fmt.Println("--------------------------------")
 	for _, value := range dir {
 		fullPath := fmt.Sprintf("%v/%v", path, value.Name())
 		fmt.Println("full path", fullPath)
@@ -50,7 +51,7 @@ func main() {
 			}
 			fmt.Println("--------------------------------")
 		} else {
-			fmt.Println("file", fullPath, "skipped")
+			fmt.Println("- file", fullPath, "is skipped because its type is not in the list")
 		}
 
 	}
