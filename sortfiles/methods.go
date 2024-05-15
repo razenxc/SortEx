@@ -52,3 +52,10 @@ func CheckTypes(filePath string, fileTypes []string) (status bool) {
 	}
 	return status
 }
+
+func IsItDir(filePath string) (status bool) {
+	if file, _ := os.Stat(filePath); file.IsDir() {
+		return true
+	}
+	return false
+}

@@ -1,4 +1,4 @@
-module EXIFphotoSorter
+module SortFilesWithEXIFdata
 
 go 1.22.2
 

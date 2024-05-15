@@ -1,5 +1,5 @@
-# EXIFphotoSorter
-## Sort your photos (or another files with EXIF data) by date on directories
+# SortFilesWithEXIFdata
+## Sort your media with the EXIF data by date on directories
 
 ```
 photo1.jpg              2024_05_14
@@ -12,9 +12,10 @@ photo3.jpeg             2023_12_05
 - run it with **go** from terminal
     - <code>go run .</code>
 - compile it with **go** from terminal
+    - <code>mkdir build</code>
     - <code>go build -o build</code>
 - download it with **releases page**
-    - [**Here**](https://github.com/razenxc/EXIFphotoSorter/releases)
+    - [**Here**](https://github.com/razenxc/SortFilesWithEXIFdata/releases)
 
 ## Thirdparty
 - [goexif](https://github.com/rwcarlsen/goexif)
