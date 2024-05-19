@@ -22,6 +22,18 @@ func main() {
 		log.Fatal(err)
 	}
 
+	input, err = readString("Do you want revert changes? [y/n]: ")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if input == "y" {
+		err := sortfiles.RevertChanges(path + "/backup.json")
+		if err != nil {
+			log.Fatal(err)
+		}
+		os.Exit(0)
+	}
+
 	// File types to sort
 	input, err = readString("Enter files types to sort separated by spaces \".jpeg .png .jpg\" or \"all\": ")
 	if err != nil {
@@ -48,6 +60,8 @@ func main() {
 		}
 	}
 
+	var backupData []sortfiles.BackupJSON
+
 	for _, value := range dir {
 		fullPath := fmt.Sprintf("%v/%v", path, value.Name())
 		fmt.Println("full path", fullPath)
@@ -71,14 +85,19 @@ func main() {
 			}
 			fmt.Println("newDir:", newDir)
 
-			err = sortfiles.MoveToFolder(fullPath, newDir+"/"+value.Name())
+			err = sortfiles.MoveToDir(fullPath, newDir+"/"+value.Name())
 			if err != nil {
 				log.Println(err)
 			}
+			backupData = append(backupData, sortfiles.BackupJSON{
+				OldPath: fullPath,
+				NewPath: newDir + "/" + value.Name(),
+			})
 		} else {
 			fmt.Println("path", fullPath, "is skipped because its type is not in the list")
 		}
 	}
+	sortfiles.CreateBackup(path, backupData)
 }
 
 func readString(prompt string) (string, error) {

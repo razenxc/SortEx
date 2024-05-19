@@ -1,9 +1,11 @@
 package sortfiles
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path"
+	"time"
 
 	"github.com/rwcarlsen/goexif/exif"
 )
@@ -36,7 +38,7 @@ func CreateFolder(exif *EXIFdata, path string) (string, error) {
 	return createdDir, err
 }
 
-func MoveToFolder(oldPath string, newPath string) error {
+func MoveToDir(oldPath string, newPath string) error {
 	err := os.Rename(oldPath, newPath)
 	return err
 }
@@ -58,4 +60,65 @@ func IsItDir(filePath string) (status bool) {
 		return true
 	}
 	return false
+}
+
+func CreateBackup(pathToSave string, data []BackupJSON) error {
+	//cdt := getCurrentDateTime() // current data time
+
+	//file, err := os.Create(pathToSave + "/" + fmt.Sprintf("%v_%v_%v-%v_%v_%v-backup", cdt.day, cdt.month, cdt.year, cdt.hour, cdt.minute, cdt.second) + ".json")
+	file, err := os.Create(pathToSave + "/backup.json")
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	toWrite, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	nBytes, err := file.Write(toWrite)
+	if err != nil {
+		return err
+	}
+	fmt.Println("=====================")
+	fmt.Printf("| writed bytes: %v\n", nBytes)
+	fmt.Println("=====================")
+	return nil
+}
+
+func RevertChanges(pathToBackup string) error {
+	byteData, err := os.ReadFile(pathToBackup)
+	if err != nil {
+		return err
+	}
+
+	var data []BackupJSON
+
+	err = json.Unmarshal(byteData, &data)
+	if err != nil {
+		return err
+	}
+
+	for i := 0; i < len(data); i++ {
+		err := MoveToDir(string(data[i].NewPath), string(data[i].OldPath))
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	return nil
+}
+
+func getCurrentDateTime() (d *dateTime) {
+	time := time.Now()
+	d = &dateTime{
+		hour:   uint8(time.Hour()),
+		minute: uint8(time.Minute()),
+		second: uint8(time.Second()),
+		day:    uint8(time.Day()),
+		month:  uint8(time.Month()),
+		year:   uint16(time.Year()),
+	}
+	return
 }
