@@ -33,5 +33,8 @@ photo3.jpeg             2023_12_05
 - undo changes if something went wrong
 `-b --restore-backup "/home/user/mydir/31_7_2024-21_30_4-backup.sfbackup"`🟢
 
+## The Screenshot
+![image](https://github.com/user-attachments/assets/d698ad99-4d37-4c68-bd0c-0cdd54226c6e)
+
 ## Thirdparty
 - [goexif](https://github.com/rwcarlsen/goexif)
