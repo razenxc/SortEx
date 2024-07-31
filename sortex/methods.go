@@ -63,10 +63,10 @@ func IsItDir(filePath string) (status bool) {
 }
 
 func CreateBackup(pathToSave string, data []BackupJSON) error {
-	//cdt := getCurrentDateTime() // current data time
+	cdt := getCurrentDateTime() // current data time
 
-	//file, err := os.Create(pathToSave + "/" + fmt.Sprintf("%v_%v_%v-%v_%v_%v-backup", cdt.day, cdt.month, cdt.year, cdt.hour, cdt.minute, cdt.second) + ".sfbackup")
-	file, err := os.Create(pathToSave + "/backup.sfbackup")
+	file, err := os.Create(pathToSave + "/" + fmt.Sprintf("%v_%v_%v-%v_%v_%v-backup", cdt.day, cdt.month, cdt.year, cdt.hour, cdt.minute, cdt.second) + ".sfbackup")
+	//file, err := os.Create(pathToSave + "/backup.sfbackup")
 	if err != nil {
 		return err
 	}

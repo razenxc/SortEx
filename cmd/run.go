@@ -14,13 +14,15 @@ var determinedPath string
 var internalDirs bool
 var resultPath string
 var moveWithoutEx bool
+var restoreBackup string
 
 func init() {
-	rootCmd.PersistentFlags().BoolVarP(&currentDir, "current", "c", false, "sort files in current dir")
-	rootCmd.PersistentFlags().StringVarP(&determinedPath, "determined", "d", "", "select determined dir to sort")
-	rootCmd.PersistentFlags().BoolVarP(&internalDirs, "internal-dirs", "i", false, "sort files in all internal dirs")
-	rootCmd.PersistentFlags().StringVarP(&resultPath, "save", "s", "", "select the path where files will be sorted")
-	rootCmd.PersistentFlags().BoolVarP(&moveWithoutEx, "move-no-data", "m", true, "should files without exif data be transfered?")
+	rootCmd.PersistentFlags().BoolVarP(&currentDir, "current", "c", false, "(1)sort files in current dir")
+	rootCmd.PersistentFlags().StringVarP(&determinedPath, "determined", "d", "", "(2)sort files in specific dir")
+	//rootCmd.PersistentFlags().BoolVarP(&internalDirs, "internal-dirs", "i", false, "(1)(2)sort files in all internal dirs")
+	rootCmd.PersistentFlags().StringVarP(&resultPath, "save", "s", "", "(1)(2)select the path where the files will be sorted")
+	rootCmd.PersistentFlags().BoolVarP(&moveWithoutEx, "move-no-data", "m", true, "(1)(2)should files without data be transferred? (true by default)")
+	rootCmd.PersistentFlags().StringVarP(&restoreBackup, "restore-backup", "b", "", "(0)undo changes if something went wrong")
 }
 
 func sort(cmd *cobra.Command, args []string) {
@@ -39,6 +41,11 @@ func sort(cmd *cobra.Command, args []string) {
 		path = determinedPath
 	} else if currentDir && determinedPath != "" {
 		fmt.Println("[CANNOT USE] sortex -c -d \"" + determinedPath + "\"")
+	} else if restoreBackup != "" {
+		err := sortex.RevertChanges(restoreBackup)
+		if err != nil {
+			log.Fatal("[ERROR] -", err)
+		}
 	} else {
 		log.Fatal("[CANNOT USE] sortex -h --help")
 	}
@@ -92,6 +99,6 @@ func sort(cmd *cobra.Command, args []string) {
 		} else {
 			fmt.Println("path", fullPath, "is skipped because its type is not in the list")
 		}
-		sortex.CreateBackup(path, backupData)
 	}
+	sortex.CreateBackup(movePath, backupData)
 }

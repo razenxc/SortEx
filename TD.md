@@ -1,12 +1,14 @@
-# Technical Documentation of "Sort File With EXIF data" cli program
+# Technical Documentation of "Sort Files with EXIF data" cli program
 
-Idea - sort files with EXIF data by dirs with date
+Problem: Once, I got the corrupted sd card in my camera, I was able to recover all the data, but all the photos were randomly "scattered" in one directory and with random names.
+
+Solution: I decided to write a program that would sort these photos into directories separated by date.
 
 Example:
 ```
-1.png		23_01_2020
-2.png	-> 	02_06_2023
-3.png 		13_08_2024
+1ABCD.png		23_01_2020
+2BCDE.png	-> 	02_06_2023
+3CDEF.png 		13_08_2024
 ```
 
 ## Program should:
@@ -30,14 +32,14 @@ Example:
 
 - sort files from dirs in current dirrectory ❌
 
-`sortex -c -i` 
+`sortex -c` 
 
 `sortex --internal-dirs`
 - select the path where files will be sorted ✅
 
-`sortex -c -s "/home/sort/here"`
+`sortex -s "/home/sort/here"`
 
-`sortex --current --internal-dirs --save "/home/sort/here"`
+`sortex --save "/home/sort/here"`
 
 ## Also
 - set dir date format ❌
@@ -52,8 +54,8 @@ Example:
 
 `--move-no-data false`
 
-- restore a backup
+- restore a backup ✅
 
-`-b "/path/to/dir/with/a/backup"`
+`-b "/fullpath/to/a/backup/file"`
 
-`--restore-backup "/path/to/dir/with/a/backup"`
+`--restore-backup "/fullpath/to/a/backup/file"`
