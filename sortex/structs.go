@@ -1,4 +1,4 @@
-package sortfiles
+package sortex
 
 type EXIFdata struct {
 	Date
