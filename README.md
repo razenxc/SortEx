@@ -3,10 +3,9 @@
 ### [Technical Documentation](TD.md)
 
 ```
-photo1.jpg              2024_05_14
-photo2.png      to =>   2024_04_26
-photo3.jpeg             2023_12_05
-
+photo1.jpg              2024_05_14.jpg
+photo2.png      to =>   2024_04_26.png
+photo3.jpeg             2023_12_05.jpeg
 ```
 
 ## Running

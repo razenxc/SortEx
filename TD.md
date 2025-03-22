@@ -6,9 +6,9 @@ Solution: I decided to write a program that would sort these photos into directo
 
 Example:
 ```
-1ABCD.png		23_01_2020
-2BCDE.png	-> 	02_06_2023
-3CDEF.png 		13_08_2024
+1ABCD.png		23_01_2020.png
+2BCDE.png	-> 	02_06_2023.png
+3CDEF.png 		13_08_2024.png
 ```
 
 ## Program should:
